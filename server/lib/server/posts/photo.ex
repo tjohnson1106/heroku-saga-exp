@@ -1,7 +1,7 @@
 defmodule Server.Posts.Photo do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias Server.Posts.Photo
 
   schema "photos" do
     field :caption, :string
@@ -14,6 +14,6 @@ defmodule Server.Posts.Photo do
   def changeset(photo, attrs) do
     photo
     |> cast(attrs, [:image_url, :caption])
-    |> validate_required([:image_url)
+    |> validate_required([:image_url])
   end
 end
