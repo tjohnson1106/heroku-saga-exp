@@ -1,5 +1,5 @@
-defmodule InstagramWeb.Router do
-  use InstagramWeb, :router
+defmodule ServerWeb.Router do
+  use ServerWeb, :router
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -9,11 +9,11 @@ defmodule InstagramWeb.Router do
     pipe_through :api
 
     forward "/graphql", Absinthe.Plug,
-      schema: InstagramWeb.Schema
+      schema: ServerWeb.Schema
 
     if Mix.env == :dev do
       forward "/graphiql", Absinthe.Plug.GraphiQL,
-        schema: InstagramWeb.Schema
+        schema: ServerWeb.Schema
     end
   end
 end
