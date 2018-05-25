@@ -13,6 +13,9 @@ defmodule ServerWeb.Schema do
 
  
   end
-  
+     field :photo, :photo do
+      arg :id, non_null(:id)
+      resolve &Resolvers.Posts.photo/3
+     end
   end
 end
