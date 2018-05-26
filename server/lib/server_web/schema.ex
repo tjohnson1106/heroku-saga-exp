@@ -7,12 +7,13 @@ defmodule ServerWeb.Schema do
 
   query do
   
-  @desc   "Get list of photos"
+  @desc "Get list of photos"
   field :photos, list_of(:photo) do
     resolve &Resolvers.Posts.photos/3
 
  
   end
+  @desc "get single photo via id"
      field :photo, :photo do
       arg :id, non_null(:id)
       resolve &Resolvers.Posts.photo/3
