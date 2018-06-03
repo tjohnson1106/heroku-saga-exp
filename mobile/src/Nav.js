@@ -1,12 +1,13 @@
 import { Navigation } from "react-native-navigation";
-
+  
 import { registerScreens } from "./screens";
+import { iconsLoaded, iconsMap } from "./utils/themes";
 
 registerScreens();
 
 export default class Nav {
   constructor() {
-    this._initApp();
+    iconsLoaded.then(() => this._initApp());
   }
 
   _initApp() {
@@ -15,12 +16,15 @@ export default class Nav {
         {
           label: "Feeds",
           screen: "mobile.FeedsScreen",
-          title: "Saga"
+          title: "Saga",
+          icon: iconsMap.home
         },
         {
           label: "Explore",
           screen: "mobile.ExploreScreen",
-          title: "Explore"
+          title: "Explore",
+          icons: iconsMap["ios-search"]
+
         }
       ]
     });

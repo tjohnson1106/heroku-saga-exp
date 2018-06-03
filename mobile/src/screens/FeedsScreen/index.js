@@ -1,18 +1,16 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React, { Component } from "react";
+import { ScrollView, Text } from "react-native";
+
+import { StoryCard } from "../../components";
 
 class FeedsScreen extends Component {
- 
-    render() {
-        return (
-            <View>
-                <Text>
-                    Feeds Screen
-                </Text>
-            </View>
-            
-        );
-    }
+  render() {
+    return (
+      <ScrollView>
+        <StoryCard />
+      </ScrollView>
+    );
+  }
 }
 
 export default FeedsScreen;
