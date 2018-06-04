@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
 import Header from "./Header";
+import ActionButtons from "./ActionButtons";
 
 class StoryCard extends Component {
   state = {};
@@ -16,7 +17,7 @@ class StoryCard extends Component {
               "https://res.cloudinary.com/bracket-factory/image/upload/v1528082073/abstract_V04.jpg"
           }}
         />
-        <Text>StoryCard</Text>
+        <ActionButtons />
       </View>
     );
   }
