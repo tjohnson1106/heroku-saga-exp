@@ -26,7 +26,6 @@ class StoryCard extends Component {
 const styles = StyleSheet.create({
   root: {
     minHeight: 800,
-    backgroundColor: "red",
     paddingBottom: 10
   },
   img: {
