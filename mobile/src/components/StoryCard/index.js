@@ -5,6 +5,7 @@ import { human, iOSColors } from "react-native-typography";
 import Header from "./Header";
 import ActionButtons from "./ActionButtons";
 import Meta from "./Meta";
+import CommentInput from "../CommentInput";
 
 class StoryCard extends Component {
   state = {};
@@ -25,6 +26,7 @@ class StoryCard extends Component {
           <TouchableOpacity>
             <Text style={styles.commentViewAll}>View all 14 comments</Text>
           </TouchableOpacity>
+          <CommentInput />
         </View>
       </View>
     );
