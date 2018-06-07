@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   input: {
     borderWidth: 1,
     borderColor: iOSColors.lightGray2,
-    alignItems: "flex-start ",
+    alignItems: "flex-start",
     paddingVertical: 5,
     paddingHorizontal: 10,
     width: "95%",
