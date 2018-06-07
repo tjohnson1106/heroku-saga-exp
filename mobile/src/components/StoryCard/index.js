@@ -16,8 +16,7 @@ class StoryCard extends Component {
         <Image
           style={styles.img}
           source={{
-            uri:
-              "https://res.cloudinary.com/bracket-factory/image/upload/v1528082073/abstract_V04.jpg"
+            uri: this.props.data.imageUrl
           }}
         />
         <ActionButtons />
