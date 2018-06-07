@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { ScrollView, Text } from "react-native";
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 
 import { StoryCard } from "../../components";
 
@@ -13,4 +15,14 @@ class FeedsScreen extends Component {
   }
 }
 
-export default FeedsScreen;
+const getPhotos = gql`
+  query {
+    photos {
+      id
+      imageUrl
+      caption
+    }
+  }
+`;
+
+export default graphql(getPhotos)(FeedsScreen);
