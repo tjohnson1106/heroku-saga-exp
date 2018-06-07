@@ -20,7 +20,7 @@ class StoryCard extends Component {
           }}
         />
         <ActionButtons />
-        <Meta />
+        <Meta caption={this.props.data.caption} />
         <View style={styles.commentsWrapper}>
           <TouchableOpacity>
             <Text style={styles.commentViewAll}>View all 14 comments</Text>
