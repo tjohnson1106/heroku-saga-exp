@@ -16,10 +16,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function Meta({
-  caption = "this is a great photo",
-  username = "Thomas J"
-}) {
+export default function Meta({ caption, username = "Thomas J" }) {
   return (
     <View style={styles.root}>
       <View style={styles.wrapper}>
@@ -29,7 +26,7 @@ export default function Meta({
         </Text>
       </View>
       <View style={styles.wrapper}>
-        <Text style={styles.text}>
+        <Text numberOfLines={2} style={styles.text}>
           <Text style={systemWeights.regular}>{username}</Text> {caption}
         </Text>
       </View>
