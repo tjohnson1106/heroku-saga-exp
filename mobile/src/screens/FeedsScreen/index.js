@@ -5,7 +5,8 @@ import {
   ActivityIndicator,
   StyleSheet,
   View,
-  FlatList
+  FlatList,
+  RefreshControl
 } from "react-native";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
@@ -13,11 +14,23 @@ import { graphql } from "react-apollo";
 import { StoryCard } from "../../components";
 
 class FeedsScreen extends Component {
-  state = {};
+  state = {
+    isRefreshing: false
+  };
 
   _keyExtractor = item => item.id;
 
   _renderItem = ({ item }) => <StoryCard data={item} />;
+
+  _refreshRequest = async () => {
+    this.setState({
+      isRefreshing: true
+    });
+    await this.props.data.refetch();
+    this.setState({
+      isRefreshing: false
+    });
+  };
 
   render() {
     if (this.props.data.loading) {
@@ -33,6 +46,12 @@ class FeedsScreen extends Component {
         data={this.props.data.photos}
         keyExtractor={this._keyExtractor}
         renderItem={this._renderItem}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this._refreshRequest}
+          />
+        }
       />
     );
   }

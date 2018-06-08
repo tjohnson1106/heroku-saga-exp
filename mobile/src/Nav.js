@@ -1,5 +1,4 @@
 import { Navigation } from "react-native-navigation";
-  
 import { registerScreens } from "./screens";
 import { iconsLoaded, iconsMap } from "./utils/themes";
 
@@ -24,7 +23,6 @@ export default class Nav {
           screen: "mobile.ExploreScreen",
           title: "Explore",
           icons: iconsMap["ios-search"]
-
         }
       ]
     });
