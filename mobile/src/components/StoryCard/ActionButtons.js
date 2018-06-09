@@ -16,9 +16,7 @@ class ActionButtons extends Component {
           <TouchableOpacity hitSlop={makeHitSlop(20)} style={styles.action}>
             <Evilicons name="comment" size={35} />
           </TouchableOpacity>
-          {/* <TouchableOpacity hitSlop={makeHitSlop(20)} style={styles.action}>
-            <Ionicons name="ios-send-outline" size={35} />
-          </TouchableOpacity> */}
+          */}
         </View>
         <View style={styles.fakeView} />
         <TouchableOpacity hitSlop={makeHitSlop(20)} style={styles.bookmarkWrapper}>
