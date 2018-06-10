@@ -14,7 +14,7 @@ defmodule Server.Accounts.User do
   end
 
   @doc false
-  def changeset(user, attrs) do
+  defp changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :avatar, :facebook_id, :email, :first_name, :last_name])
     |> validate_required([:username, :avatar, :facebook_id, :email, :first_name, :last_name])
