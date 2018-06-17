@@ -43,7 +43,8 @@ defmodule Server.Mixfile do
       {:absinthe_plug, "~> 1.4"},
       {:absinthe_ecto, "~> 0.1.3"},
       {:faker, "~> 0.9", only: [:dev, :test]},
-      {:facebook, "~> 0.18.0"}
+      {:facebook, "~> 0.18.0"},
+      {:guardian, "~> 1.0"}
     ]
   end
 

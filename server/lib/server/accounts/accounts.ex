@@ -4,6 +4,16 @@ defmodule Server.Accounts do
 
   alias Server.Accounts.User
 
+  def get_user_or_create(attrs, search_params) do
+    case Repo.get_by(User, Map.to_list(search_params)) do
+      nil ->
+        create_user(attrs)
+
+      user ->
+        {:ok, user}
+    end
+  end
+
   def list_users do
     Repo.all(User)
   end
