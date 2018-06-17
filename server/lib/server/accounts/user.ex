@@ -18,8 +18,10 @@ defmodule Server.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:username, :avatar, :facebook_id, :email, :first_name, :last_name])
-    |> validate_required([:username, :avatar, :facebook_id, :email, :first_name, :last_name])
+    |> validate_required([:avatar, :email, :facebook_id, :first_name, :last_name])
     |> unique_constraint(:email)
     |> unique_constraint(:facebook_id)
   end
 end
+
+# removing username from required
