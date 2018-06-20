@@ -6,7 +6,12 @@ class LoginScreen extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <Text>Login</Text>
+        <View style={styles.header}>
+          <Text>Saga Beta</Text>
+        </View>
+        <View style={styles.content}>
+          <Text>Hello</Text>
+        </View>
       </View>
     );
   }
@@ -17,6 +22,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center"
+  },
+  header: {
+    flex: 0.3,
+    backgroundColor: "purple",
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  content: {
+    flex: 1,
+    backgroundColor: "blue",
+    alignSelf: "stretch"
   }
 });
 
