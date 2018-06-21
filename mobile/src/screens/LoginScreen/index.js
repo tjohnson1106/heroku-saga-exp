@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { iOSColors } from "react-native-typography";
+
+//create app name view 06192018
 
 class LoginScreen extends Component {
   state = {};
@@ -7,7 +10,7 @@ class LoginScreen extends Component {
     return (
       <View style={styles.root}>
         <View style={styles.header}>
-          <Text>Saga Beta</Text>
+          <Text style={styles.appName}>Saga Beta</Text>
         </View>
         <View style={styles.content}>
           <Text>Hello</Text>
@@ -34,6 +37,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "blue",
     alignSelf: "stretch"
+  },
+  appName: {
+    color: iOSColors.white,
+    fontSize: 50
   }
 });
 
