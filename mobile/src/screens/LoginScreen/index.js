@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { iOSColors, human, systemWeights } from "react-native-typography";
 import LinearGradient from "react-native-linear-gradient";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { fonts } from "../../utils/themes/fonts";
 
@@ -56,11 +57,17 @@ class LoginScreen extends Component {
           {/* new section for Facebook login */}
 
           <View style={styles.orWrapper}>
-            <View style={styles.orDivider}>{}</View>
+            <View style={styles.orDivider} />
             <View style={styles.orTextWrapper}>
               <Text style={styles.orText}>OR</Text>
             </View>
-            <View style={styles.orDivider}>{}</View>
+            <View style={styles.orDivider} />
+          </View>
+          <View style={styles.fbSection}>
+            <TouchableOpacity style={styles.fbLoginButton}>
+              <MaterialCommunityIcons size={30} name="facebook-box" color="#318DEE" />
+              <Text style={styles.fbLoginButtonText}>Continue with Facebook</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -76,7 +83,6 @@ const styles = StyleSheet.create({
   },
   header: {
     flex: 0.3,
-    backgroundColor: "purple",
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center"
@@ -93,7 +99,8 @@ const styles = StyleSheet.create({
   section: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    alignSelf: "stretch"
   },
   inputWrapper: {
     height: 45,
@@ -106,7 +113,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   input: {
-    flex: 1
+    flex: 1,
+    padding: 0
   },
   loginButton: {
     height: 45,
@@ -155,6 +163,17 @@ const styles = StyleSheet.create({
   orText: {
     ...systemWeights.semibold,
     color: iOSColors.gray
+  },
+  fbLoginButton: {
+    flexDirection: "row",
+    height: 50,
+    alignItems: "center"
+  },
+  fbLoginButtonText: {
+    ...human.calloutObject,
+    ...systemWeights.semibold,
+    color: "#318DEE",
+    marginLeft: 10
   }
 });
 
