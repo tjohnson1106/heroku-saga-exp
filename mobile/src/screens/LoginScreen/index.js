@@ -7,7 +7,7 @@ import {
   TextInput,
   TouchableOpacity
 } from "react-native";
-import { iOSColors } from "react-native-typography";
+import { iOSColors, human, systemWeights } from "react-native-typography";
 import LinearGradient from "react-native-linear-gradient";
 
 import { fonts } from "../../utils/themes/fonts";
@@ -46,6 +46,21 @@ class LoginScreen extends Component {
             <TouchableOpacity style={styles.loginButton}>
               <Text style={styles.loginButtonText}>Login</Text>
             </TouchableOpacity>
+            <View style={styles.forgotWrapper}>
+              <Text style={styles.callout}>Forgot password? </Text>
+              <TouchableOpacity>
+                <Text style={styles.buttonText}>Get help logging in?</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {/* new section for Facebook login */}
+
+          <View style={styles.orWrapper}>
+            <View style={styles.orDivider}>{}</View>
+            <View style={styles.orTextWrapper}>
+              <Text style={styles.orText}>OR</Text>
+            </View>
+            <View style={styles.orDivider}>{}</View>
           </View>
         </View>
       </View>
@@ -104,6 +119,42 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     color: iOSColors.white
+  },
+  forgotWrapper: {
+    marginVertical: 10,
+    flexDirection: "row"
+  },
+  buttonText: {
+    ...human.footnoteObject,
+    ...systemWeights.semibold,
+    color: "#318DEE"
+  },
+  callout: {
+    ...human.footnoteObject,
+    ...systemWeights.semibold,
+    color: iOSColors.midGray
+  },
+  orWrapper: {
+    width: "90%",
+    marginVertical: 10,
+    flexDirection: "row",
+    alignSelf: "center",
+    alignItems: "center"
+  },
+  orDivider: {
+    height: 1,
+    width: "100%",
+    flex: 1,
+    backgroundColor: "#E4E4E4"
+  },
+  orTextWrapper: {
+    flex: 0.5,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  orText: {
+    ...systemWeights.semibold,
+    color: iOSColors.gray
   }
 });
 
