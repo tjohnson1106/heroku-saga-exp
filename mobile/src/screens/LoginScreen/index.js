@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, StatusBar, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  TextInput,
+  TouchableOpacity
+} from "react-native";
 import { iOSColors } from "react-native-typography";
 import LinearGradient from "react-native-linear-gradient";
 
@@ -36,6 +43,9 @@ class LoginScreen extends Component {
             <View style={styles.inputWrapper}>
               <TextInput style={styles.input} placeholder="Password" />
             </View>
+            <TouchableOpacity style={styles.loginButton}>
+              <Text style={styles.loginButtonText}>Login</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -82,6 +92,18 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1
+  },
+  loginButton: {
+    height: 45,
+    width: "90%",
+    borderRadius: 5,
+    backgroundColor: "#318DEE70",
+    marginTop: 10,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  loginButtonText: {
+    color: iOSColors.white
   }
 });
 
