@@ -63,10 +63,16 @@ class LoginScreen extends Component {
             </View>
             <View style={styles.orDivider} />
           </View>
-          <View style={styles.fbSection}>
+          <View style={[styles.section, styles.sectionButton]}>
             <TouchableOpacity style={styles.fbLoginButton}>
               <MaterialCommunityIcons size={30} name="facebook-box" color="#318DEE" />
               <Text style={styles.fbLoginButtonText}>Continue with Facebook</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.noAccountWrapper}>
+            <Text style={styles.callout}>Don't have an account? Sign up.</Text>
+            <TouchableOpacity>
+              <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -101,6 +107,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "stretch"
+  },
+  sectionButton: {
+    justifyContent: "flex-start",
+    flex: 0.7
   },
   inputWrapper: {
     height: 45,
@@ -174,6 +184,15 @@ const styles = StyleSheet.create({
     ...systemWeights.semibold,
     color: "#318DEE",
     marginLeft: 10
+  },
+  noAccountWrapper: {
+    height: 50,
+    width: "100%",
+    borderColor: "#ECECEC",
+    borderTopWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row"
   }
 });
 
