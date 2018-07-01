@@ -5,14 +5,18 @@ import {
   StyleSheet,
   StatusBar,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from "react-native";
 import { iOSColors, human, systemWeights } from "react-native-typography";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { LoginManager } from "react-native-fbsdk";
+import { LoginManager, AccessToken } from "react-native-fbsdk";
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 
 import { fonts } from "../../utils/themes/fonts";
+import { authToken } from "../../utils/constants";
 
 const COLORS_GRADIENTS = ["#4286f4", "#373b44"];
 
@@ -20,10 +24,29 @@ class LoginScreen extends Component {
   state = {};
 
   _onLoginFbPress = async () => {
-    const res = await LoginManager.logInWithReadPermissions(["public_profile"]);
+    const res = await LoginManager.logInWithReadPermissions(["public_profile", "email"]);
+
+    if (res.grantedPermissions && !res.isCancelled) {
+      const data = await AccessToken.getCurrentAccessToken();
+
+      if (data) {
+        const serverResponse = await this.props.loginMutation({
+          variables: {
+            provider: "FACEBOOK",
+            token: data.accessToken
+          }
+        });
+        const { token } = serverResponse.data.login;
+
+        await AsyncStorage.setItem(authToken, token);
+      }
+    }
   };
 
   render() {
+    console.log("======================================");
+    console.log("props", this.props);
+    console.log("======================================");
     return (
       <View style={styles.root}>
         <StatusBar style="light-content" />
@@ -202,4 +225,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LoginScreen;
+const loginMutation = gql`
+  mutation($provider: Provider, $token: String) {
+    login(provider: $provider, token: $token) {
+      token
+    }
+  }
+`;
+
+export default graphql(loginMutation, { name: `loginMutation` })(LoginScreen);
