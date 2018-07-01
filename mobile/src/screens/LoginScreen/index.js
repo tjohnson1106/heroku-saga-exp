@@ -6,7 +6,8 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
-  AsyncStorage
+  AsyncStorage,
+  ActivityIndicator
 } from "react-native";
 import { iOSColors, human, systemWeights } from "react-native-typography";
 import LinearGradient from "react-native-linear-gradient";
@@ -17,13 +18,19 @@ import { graphql } from "react-apollo";
 
 import { fonts } from "../../utils/themes/fonts";
 import { authToken } from "../../utils/constants";
+import { startMainApp } from "../../Nav";
 
 const COLORS_GRADIENTS = ["#4286f4", "#373b44"];
 
+//left off 06321018 set initial loading state need to add activity indicator
+
 class LoginScreen extends Component {
-  state = {};
+  state = {
+    loading: false
+  };
 
   _onLoginFbPress = async () => {
+    this.setState({ loading: true });
     const res = await LoginManager.logInWithReadPermissions(["public_profile", "email"]);
 
     if (res.grantedPermissions && !res.isCancelled) {
@@ -38,15 +45,27 @@ class LoginScreen extends Component {
         });
         const { token } = serverResponse.data.login;
 
-        await AsyncStorage.setItem(authToken, token);
+        try {
+          await AsyncStorage.setItem(authToken, token);
+
+          this.setState({ loading: false });
+
+          startMainApp();
+        } catch (error) {
+          throw error;
+        }
       }
     }
   };
 
   render() {
-    console.log("======================================");
-    console.log("props", this.props);
-    console.log("======================================");
+    if (this.state.loading) {
+      return (
+        <View style={styles.root}>
+          <ActivityIndicator size="large" color="#318DEE" />
+        </View>
+      );
+    }
     return (
       <View style={styles.root}>
         <StatusBar style="light-content" />
