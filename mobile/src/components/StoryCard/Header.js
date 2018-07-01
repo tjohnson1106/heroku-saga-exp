@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { system, systemWeights } from "react-native-typography";
+import { system, systemWeights, iOSColors } from "react-native-typography";
 
 import { makeCircle, makeHitSlop } from "../../utils/themes";
 import { fakeAvatar } from "../../utils/constants";
@@ -30,7 +30,7 @@ export default function Header({
         feedback="opacity"
         style={styles.btnWrapper}
       >
-        <MaterialCommunityIcons name="dots-horizontal" size={25} />
+        <MaterialCommunityIcons name="dots-horizontal" size={25} color="#FFFFE5" />
       </TouchableOpacity>
     </View>
   );
@@ -39,7 +39,7 @@ export default function Header({
 const styles = StyleSheet.create({
   root: {
     height: 60,
-    backgroundColor: "#fff",
+    backgroundColor: "#282e45",
     flexDirection: "row",
     paddingHorizontal: 16
   },
@@ -66,10 +66,12 @@ const styles = StyleSheet.create({
     paddingLeft: 10
   },
   userName: {
-    ...human.subheadObject
+    ...human.subheadObject,
+    color: iOSColors.lightGray2
   },
   location: {
     ...human.footnoteObject,
-    ...systemWeights.light
+    ...systemWeights.light,
+    color: iOSColors.lightGray2
   }
 });
