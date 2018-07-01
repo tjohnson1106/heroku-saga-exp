@@ -34,10 +34,21 @@ class StoryCard extends Component {
 
 const styles = StyleSheet.create({
   root: {
-    minHeight: 800,
+    minHeight: 700,
     paddingBottom: 10,
-    backgroundColor: "#89C4F4",
-    flex: 1
+    backgroundColor: "#282e45",
+    // backgroundColor: "#fff",
+    flex: 1,
+    borderWidth: 4,
+    borderColor: "#191414",
+    margin: 5,
+    shadowColor: "#000000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowRadius: 5,
+    shadowOpacity: 1.0
   },
   img: {
     flex: 1

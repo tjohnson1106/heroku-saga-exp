@@ -5,17 +5,19 @@ import { iOSColors } from "react-native-typography";
 import { fakeAvatar } from "../utils/constants";
 import { makeHitSlop, makeCircle } from "../utils/themes";
 
+//avatar sits next to comment input box, both are questionable
+
 class CommentInput extends Component {
   state = {};
   render() {
     return (
       <View style={styles.root}>
         <View style={styles.avatarWrapper}>
-          <Image source={{ uri: fakeAvatar }} style={styles.avatar} />
+          {/* <Image source={{ uri: fakeAvatar }} style={styles.avatar} /> */}
         </View>
         <TouchableOpacity hitSlop={makeHitSlop(20)} style={styles.inputWrapper}>
           <View style={styles.input}>
-            <Text style={styles.inputText}>Add a comment...</Text>
+            <Text style={styles.inputText}>Comment...</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -51,7 +53,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: iOSColors.lightGray2,
     alignItems: "flex-start",
-    paddingVertical: 5,
+    paddingVertical: 2.5,
     paddingHorizontal: 10,
     width: "95%",
     borderRadius: 20

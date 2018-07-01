@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
   },
   text: {
     ...human.footnoteObject,
-    ...systemWeights.light
+    ...systemWeights.light,
+    color: "#5CA1CC"
   }
 });
 
