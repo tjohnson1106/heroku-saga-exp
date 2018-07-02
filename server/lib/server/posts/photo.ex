@@ -4,8 +4,10 @@ defmodule Server.Posts.Photo do
   alias Server.Posts.Photo
 
   schema "photos" do
-    field :caption, :string
-    field :image_url, :string
+    field(:caption, :string)
+    field(:image_url, :string)
+
+    has_many(:likes, Server.Reactions.LikePhoto)
 
     timestamps()
   end
