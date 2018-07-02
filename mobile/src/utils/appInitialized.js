@@ -10,7 +10,7 @@ export default async function appInitialized() {
   const token = await AsyncStorage.getItem(authToken);
   // const token = await AsyncStorage.removeItem(authToken);
 
-  //insert and remove bang to return to login
+  //initialize or login based on async storage token
   if (!token) {
     startLogin();
   } else {
