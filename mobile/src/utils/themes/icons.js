@@ -11,7 +11,7 @@ const replaceSuffixPattern = /--(active|big|small|very-big)/g;
 
 const icons = {
   home: [navIconSize, Entypo],
-  "ios-search": [navIconSize, Ionicons]
+  "ios-search-outline": [navIconSize, Ionicons]
 };
 
 const iconsMap = {};
