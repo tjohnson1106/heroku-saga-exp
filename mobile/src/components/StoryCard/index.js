@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import { human, iOSColors } from "react-native-typography";
+import { graphql } from "react-apollo";
 
 import Header from "./Header";
 import ActionButtons from "./ActionButtons";
 import Meta from "./Meta";
 import CommentInput from "../CommentInput";
+import { likePhoto } from "../../graphql/mutations";
 
 class StoryCard extends Component {
   state = {};
@@ -63,4 +65,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default StoryCard;
+export default graphql()(StoryCard);
