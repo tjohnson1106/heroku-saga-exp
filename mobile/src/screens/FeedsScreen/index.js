@@ -77,6 +77,7 @@ const getPhotos = gql`
       id
       imageUrl
       caption
+      viewerLike
     }
   }
 `;
