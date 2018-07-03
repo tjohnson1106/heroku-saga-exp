@@ -22,7 +22,7 @@ class StoryCard extends Component {
       });
       console.log("res", res);
     } catch (error) {
-      console.log("pressed like");
+      console.log("error".error);
     }
   };
 
@@ -36,7 +36,10 @@ class StoryCard extends Component {
             uri: this.props.data.imageUrl
           }}
         />
-        <ActionButtons onLikedPress={this._onLikedPress} />
+        <ActionButtons
+          viewerLike={this.props.data.viewerLike}
+          onLikedPress={this._onLikedPress}
+        />
         <Meta caption={this.props.data.caption} />
         <View style={styles.commentsWrapper}>
           <TouchableOpacity>
