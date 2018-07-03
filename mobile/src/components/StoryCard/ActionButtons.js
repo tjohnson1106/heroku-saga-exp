@@ -10,7 +10,11 @@ class ActionButtons extends Component {
     return (
       <View style={styles.root}>
         <View style={styles.actionWrapper}>
-          <TouchableOpacity hitSlop={makeHitSlop(10)} style={styles.action}>
+          <TouchableOpacity
+            onPress={this.props.onLikedPress}
+            hitSlop={makeHitSlop(10)}
+            style={styles.action}
+          >
             <Ionicons name="ios-heart-outline" size={30} color="#FFFFE5" />
           </TouchableOpacity>
           <TouchableOpacity hitSlop={makeHitSlop(10)} style={styles.action}>

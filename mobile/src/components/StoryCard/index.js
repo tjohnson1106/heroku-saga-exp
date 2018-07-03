@@ -11,6 +11,21 @@ import { likePhoto } from "../../graphql/mutations";
 
 class StoryCard extends Component {
   state = {};
+
+  _onLikedPress = async () => {
+    console.log("pressed like");
+    try {
+      const res = await this.props.likePhotoMutation({
+        variables: {
+          photoId: this.props.data.id
+        }
+      });
+      console.log("res", res);
+    } catch (error) {
+      console.log("pressed like");
+    }
+  };
+
   render() {
     return (
       <View style={styles.root}>
@@ -21,7 +36,7 @@ class StoryCard extends Component {
             uri: this.props.data.imageUrl
           }}
         />
-        <ActionButtons />
+        <ActionButtons onLikedPress={this._onLikedPress} />
         <Meta caption={this.props.data.caption} />
         <View style={styles.commentsWrapper}>
           <TouchableOpacity>
@@ -65,4 +80,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default graphql()(StoryCard);
+export default graphql(likePhoto, { name: "likePhotoMutation" })(StoryCard);
