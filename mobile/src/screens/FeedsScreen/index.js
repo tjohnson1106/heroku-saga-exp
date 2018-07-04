@@ -12,6 +12,7 @@ import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 
 import { StoryCard } from "../../components";
+import { FeedsPhotoFragment } from "./fragments";
 
 class FeedsScreen extends Component {
   state = {
@@ -74,12 +75,10 @@ const styles = StyleSheet.create({
 const getPhotos = gql`
   query {
     photos {
-      id
-      imageUrl
-      caption
-      viewerLike
+      ...feedsPhoto
     }
   }
+  ${FeedsPhotoFragment}
 `;
 
 export default graphql(getPhotos)(FeedsScreen);
