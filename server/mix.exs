@@ -44,7 +44,12 @@ defmodule Server.Mixfile do
       {:absinthe_ecto, "~> 0.1.3"},
       {:faker, "~> 0.9", only: [:dev, :test]},
       {:facebook, "~> 0.18.0"},
-      {:guardian, "~> 1.0"}
+      {:guardian, "~> 1.0"},
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.6"},
+      {:elixir_uuid, "~> 1.2"}
     ]
   end
 
