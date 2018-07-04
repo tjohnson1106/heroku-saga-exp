@@ -2,28 +2,20 @@ import React, { Component } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
 import { human, iOSColors } from "react-native-typography";
 import { graphql } from "react-apollo";
+import { defaultDataIdFromObject } from "apollo-cache-inmemory";
 
 import Header from "./Header";
 import ActionButtons from "./ActionButtons";
 import Meta from "./Meta";
 import CommentInput from "../CommentInput";
-import { likePhoto } from "../../graphql/mutations";
+import { likePhotoMutation } from "../../graphql/mutations";
+import { FeedsPhotoFragment } from "../../screens/FeedsScreen/fragments";
 
 class StoryCard extends Component {
   state = {};
 
-  _onLikedPress = async () => {
-    console.log("pressed like");
-    try {
-      const res = await this.props.likePhotoMutation({
-        variables: {
-          photoId: this.props.data.id
-        }
-      });
-      console.log("res", res);
-    } catch (error) {
-      console.log("error".error);
-    }
+  _onLikedPress = () => {
+    this.props.onLikePhotoMutation();
   };
 
   render() {
@@ -83,4 +75,31 @@ const styles = StyleSheet.create({
   }
 });
 
-export default graphql(likePhoto, { name: "likePhotoMutation" })(StoryCard);
+export default graphql(likePhotoMutation, {
+  props: ({ mutate, ownProps }) => ({
+    onLikePhotoMutation: () =>
+      mutate({
+        variables: { photoId: ownProps.data.id },
+        update: (store, { data: { likePhoto } }) => {
+          const id = defaultDataIdFromObject({
+            __typename: "Photo",
+            id: ownProps.data.id
+          });
+
+          const photo = store.readFragment({
+            id,
+            fragment: FeedsPhotoFragment
+          });
+
+          store.writeFragment({
+            id,
+            fragment: FeedsPhotoFragment,
+            data: {
+              ...photo,
+              viewerLike: likePhoto
+            }
+          });
+        }
+      })
+  })
+})(StoryCard);
