@@ -11,6 +11,7 @@ defmodule Server.Accounts.User do
     field(:last_name, :string)
     field(:username, :string)
 
+    has_many(:photos, Server.Posts.Photo)
     has_many(:like_photos, Server.Reactions.LikePhoto)
 
     timestamps()

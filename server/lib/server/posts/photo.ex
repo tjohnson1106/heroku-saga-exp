@@ -7,6 +7,8 @@ defmodule Server.Posts.Photo do
     field(:caption, :string)
     field(:image_url, :string)
 
+    belongs_to(:user, Server.Accounts.User)
+
     has_many(:likes, Server.Reactions.LikePhoto)
 
     timestamps()
@@ -15,7 +17,7 @@ defmodule Server.Posts.Photo do
   @doc false
   def changeset(photo, attrs) do
     photo
-    |> cast(attrs, [:image_url, :caption])
-    |> validate_required([:image_url])
+    |> cast(attrs, [:image_url, :caption, :user_id])
+    |> validate_required([:image_url, :user_id])
   end
 end
