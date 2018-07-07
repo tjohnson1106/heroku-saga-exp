@@ -19,6 +19,12 @@ defmodule ServerWeb.Schema do
       arg(:id, non_null(:id))
       resolve(&Resolvers.Posts.photo/3)
     end
+
+    @desc "Get a presigned for an upload photo"
+    field :presign_url, :presign_url do
+      middleware.Middleware.Authorize
+      resolve(&Resolvers.Posts.presign_url/3)
+    end
   end
 
   mutation do

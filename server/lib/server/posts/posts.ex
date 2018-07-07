@@ -49,6 +49,6 @@ defmodule Server.Posts do
   end
 
   defp get_image_url(bucket, uuid) do
-    "https://s3.amazonaws.com/saga-beta/#{bucket}/#{uuid}.jpg"
+    "http://s3.amazonaws.com/saga-beta/#{bucket}/#{uuid}.jpg"
   end
 end
