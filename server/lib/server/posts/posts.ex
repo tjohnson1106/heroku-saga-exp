@@ -34,12 +34,13 @@ defmodule Server.Posts do
     Repo.changeset(photo, %{})
   end
 
+  #   query_params: query_params removed from presign options
   def get_presign_url do
     uuid = UUID.uuid4()
     bucket = "photos"
     config = %{region: "us-east-1"}
-    query_params = [{"ContentType", "image/jpeg"}, {"ACL", "public-read"}]
-    presign_options = [virtual_host: false, query_params: query_params]
+    query_params = [{"Content-Type", "image/jpeg"}, {"ACL", "public-read"}]
+    presign_options = [virtual_host: false]
 
     {:ok, url} =
       ExAws.Config.new(:s3, config)
