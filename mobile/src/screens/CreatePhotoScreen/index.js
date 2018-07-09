@@ -1,26 +1,39 @@
 import React, { PureComponent } from "react";
-import { StyleSheet, Text, View, CameraRoll, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  CameraRoll,
+  Image,
+  FlatList,
+  ActivityIndicator
+} from "react-native";
 
 const MAX_PHOTOS = 20;
 
 class CreatePhotoScreen extends PureComponent {
   state = {
-    images: []
+    images: [],
+    loading: false
   };
 
   componentDidMount() {
     this._getPhotos;
   }
 
-  _getPhotos = async () => {
+  _getPhotos = async after => {
+    this.setState({
+      loading: true
+    });
     const res = await CameraRoll.getPhotos({
       first: MAX_PHOTOS,
       after
     });
 
     this.setState({
-      images: [...this.state.images, res.edges]
+      images: [...this.state.images, ...res.edges]
     });
+    console.log("res", res);
   };
 
   _renderItem = ({ item }) => {
@@ -31,11 +44,22 @@ class CreatePhotoScreen extends PureComponent {
     );
   };
 
+  _keyExtractor = item => item.node.image.filename;
+
   render() {
+    if (this.state.loading) {
+      return (
+        <View style={loadingWrapper}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
     return (
-      <View>
-        <Text>Photo Screen</Text>
-      </View>
+      <FlatList
+        data={this.state.images}
+        renderItem={this._renderItem}
+        keyExtractor={this._keyExtractor}
+      />
     );
   }
 }
@@ -47,6 +71,11 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1
+  },
+  loadingWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 

@@ -5,8 +5,8 @@ import {
   ActivityIndicator,
   StyleSheet,
   View,
-  FlatList,
-  RefreshControl
+  RefreshControl,
+  FlatList
 } from "react-native";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
