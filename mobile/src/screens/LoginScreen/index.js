@@ -22,8 +22,6 @@ import { startMainApp } from "../../Nav";
 
 const COLORS_GRADIENTS = ["#4286f4", "#373b44"];
 
-//left off 06321018 set initial loading state need to add activity indicator
-
 class LoginScreen extends Component {
   state = {
     loading: false

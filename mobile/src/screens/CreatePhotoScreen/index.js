@@ -6,10 +6,15 @@ import {
   CameraRoll,
   Image,
   FlatList,
-  ActivityIndicator
+  ActivityIndicator,
+  Dimensions
 } from "react-native";
 
 const MAX_PHOTOS = 20;
+const PADDING = 17;
+const MARGIN = 10;
+
+const { width } = Dimensions.get("window");
 
 class CreatePhotoScreen extends PureComponent {
   state = {
@@ -31,7 +36,8 @@ class CreatePhotoScreen extends PureComponent {
     });
 
     this.setState({
-      images: [...this.state.images, ...res.edges]
+      images: [...this.state.images, ...res.edges],
+      loading: false
     });
     console.log("res", res);
   };
@@ -58,6 +64,7 @@ class CreatePhotoScreen extends PureComponent {
       <FlatList
         data={this.state.images}
         renderItem={this._renderItem}
+        numColumns={3}
         keyExtractor={this._keyExtractor}
       />
     );
@@ -66,8 +73,11 @@ class CreatePhotoScreen extends PureComponent {
 
 const styles = StyleSheet.create({
   imageWrapper: {
-    width: 100,
-    height: 100
+    width: (width - PADDING * 2 - MARGIN) / 3,
+    height: (width - PADDING * 2 - MARGIN) / 3,
+    borderRadius: 3,
+    marginVertical: "2.5%",
+    marginHorizontal: MARGIN
   },
   image: {
     flex: 1
