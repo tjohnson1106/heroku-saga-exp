@@ -10,6 +10,11 @@ import {
   TouchableOpacity
 } from "react-native";
 
+///////////////////////////////////////////////////////////////////
+//fix camera roll then must re-design or re-think text/caption
+//in order to have a preliminary screen before sharing photo
+///////////////////////////////////////////////////////////////////
+
 const MAX_PHOTOS = 20;
 const PADDING = 17;
 const MARGIN = 10;
@@ -22,7 +27,8 @@ class CreatePhotoScreen extends PureComponent {
     loading: false,
     selected: null,
     hasNextPage: false,
-    endCursor: ""
+    endCursor: "",
+    firstQuery: true
   };
 
   componentDidMount() {
@@ -30,9 +36,11 @@ class CreatePhotoScreen extends PureComponent {
   }
 
   _getPhotos = async after => {
-    this.setState({
-      loading: true
-    });
+    if (this.state.firstQuery) {
+      this.setState({
+        loading: true
+      });
+    }
 
     const res = await CameraRoll.getPhotos({
       first: MAX_PHOTOS,
@@ -43,7 +51,8 @@ class CreatePhotoScreen extends PureComponent {
       images: [...this.state.images, ...res.edges],
       loading: false,
       hasNextPage: res.page_info.has_next_page,
-      endCursor: res.page_info.end_cursor
+      endCursor: res.page_info.end_cursor,
+      firstQuery: false
     });
     console.log("==================================");
     console.log("res", res);
@@ -72,7 +81,11 @@ class CreatePhotoScreen extends PureComponent {
 
   _keyExtractor = item => item.node.image.filename;
 
-  _onEndReached = () => {};
+  _onEndReached = () => {
+    if (this.state.hasNextPage) {
+      this._getPhotos(this.state.endCursor);
+    }
+  };
 
   render() {
     console.log("state", this.state);
@@ -90,6 +103,7 @@ class CreatePhotoScreen extends PureComponent {
         numColumns={3}
         keyExtractor={this._keyExtractor}
         extraData={this.state}
+        onEndReached={this.onEndReached}
       />
     );
   }
