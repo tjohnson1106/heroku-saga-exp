@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import {
-  ScrollView,
-  Text,
   ActivityIndicator,
   StyleSheet,
   View,
@@ -85,12 +83,6 @@ class FeedsScreen extends Component {
       />
     );
   }
-}
-
-{
-  /* <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-<StoryCard />
-</ScrollView> */
 }
 
 const styles = StyleSheet.create({
