@@ -77,6 +77,15 @@ class CreatePhotoScreen extends PureComponent {
 
   _onSelect = selected => {
     this.setState({ selected });
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          id: "goToCaption",
+          title: "Next"
+        }
+      ],
+      animated: true
+    });
   };
 
   _keyExtractor = item => item.node.image.filename;
