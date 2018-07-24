@@ -32,14 +32,12 @@ class CreatePhotoScreen extends PureComponent {
   };
 
   componentDidMount() {
-    this._getPhotos;
+    this._getPhotos();
   }
 
   _getPhotos = async after => {
     if (this.state.firstQuery) {
-      this.setState({
-        loading: true
-      });
+      this.setState({ loading: true });
     }
 
     const res = await CameraRoll.getPhotos({
@@ -54,22 +52,24 @@ class CreatePhotoScreen extends PureComponent {
       endCursor: res.page_info.end_cursor,
       firstQuery: false
     });
-    console.log("==================================");
+
+    console.log("====================================");
     console.log("res", res);
-    console.log("==================================");
+    console.log("====================================");
   };
 
   _renderItem = ({ item }) => {
     const isSelected =
       this.state.selected &&
-      this.state.selected.node.image.filename == item.node.image.filename;
+      this.state.selected.node.image.filename === item.node.image.filename;
     return (
       <TouchableOpacity
         disabled={isSelected}
-        style={styles.imageWrapper}
+        feedback="opacity"
         onPress={() => this._onSelect(item)}
+        style={styles.imageWrapper}
       >
-        <Image source={{ uri: item.node.image.uri }} style={styles._image} />
+        <Image source={{ uri: item.node.image.uri }} style={styles.image} />
         {isSelected && <View style={styles.imageHover} />}
       </TouchableOpacity>
     );
@@ -88,10 +88,12 @@ class CreatePhotoScreen extends PureComponent {
   };
 
   render() {
+    console.log("====================================");
     console.log("state", this.state);
+    console.log("====================================");
     if (this.state.loading) {
       return (
-        <View style={loadingWrapper}>
+        <View style={styles.loadingWrapper}>
           <ActivityIndicator />
         </View>
       );
@@ -103,11 +105,98 @@ class CreatePhotoScreen extends PureComponent {
         numColumns={3}
         keyExtractor={this._keyExtractor}
         extraData={this.state}
-        onEndReached={this.onEndReached}
+        onEndReached={this._onEndReached}
       />
     );
   }
 }
+
+// class CreatePhotoScreen extends PureComponent {
+//   state = {
+//     images: [],
+//     loading: false,
+//     selected: null,
+//     hasNextPage: false,
+//     endCursor: "",
+//     firstQuery: true
+//   };
+
+//   componentDidMount() {
+//     this._getPhotos;
+//   }
+
+//   _getPhotos = async after => {
+//     if (this.state.firstQuery) {
+//       this.setState({ loading: true });
+//     }
+
+//     const res = await CameraRoll.getPhotos({
+//       first: MAX_PHOTOS,
+//       after
+//     });
+
+//     this.setState({
+//       images: [...this.state.images, ...res.edges],
+//       loading: false,
+//       hasNextPage: res.page_info.has_next_page,
+//       endCursor: res.page_info.end_cursor,
+//       firstQuery: false
+//     });
+
+//     console.log("====================================");
+//     console.log("res", res);
+//     console.log("====================================");
+//   };
+
+//   _renderItem = ({ item }) => {
+//     const isSelected =
+//       this.state.selected &&
+//       this.state.selected.node.image.filename == item.node.image.filename;
+//     return (
+//       <TouchabOpacityOpacity
+//         disabled={isSelected}
+//         style={styles.imageWrapper}
+//         onPress={() => this._onSelect(item)}
+//       >
+//         <Image source={{ uri: item.node.image.uri }} style={styles._image} />
+//         {isSelected && <View style={styles.imageHover} />}
+//       </TouchabOpacityOpacity>
+//     );
+//   };
+
+//   _onSelect = selected => {
+//     this.setState({ selected });
+//   };
+
+//   _keyExtractor = item => item.node.image.filename;
+
+//   _onEndReached = () => {
+//     if (this.state.hasNextPage) {
+//       this._getPhotos(this.state.endCursor);
+//     }
+//   };
+
+//   render() {
+//     console.log("state", this.state);
+//     if (this.state.loading) {
+//       return (
+//         <View style={loadingWrapper}>
+//           <ActivityIndicator />
+//         </View>
+//       );
+//     }
+//     return (
+//       <FlatList
+//         data={this.state.images}
+//         renderItem={this._renderItem}
+//         numColumns={3}
+//         keyExtractor={this._keyExtractor}
+//         extraData={this.state}
+//         onEndReached={this.onEndReached}
+//       />
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   imageWrapper: {
@@ -117,7 +206,7 @@ const styles = StyleSheet.create({
     marginVertical: "2.5%",
     marginHorizontal: MARGIN
   },
-  image: {
+  _image: {
     flex: 1,
     borderRadius: 3
   },
