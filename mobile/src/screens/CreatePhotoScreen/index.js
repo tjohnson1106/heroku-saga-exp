@@ -69,7 +69,7 @@ class CreatePhotoScreen extends PureComponent {
         onPress={() => this._onSelect(item)}
         style={styles.imageWrapper}
       >
-        <Image source={{ uri: item.node.image.uri }} style={styles.image} />
+        <Image source={{ uri: item.node.image.uri }} style={styles._image} />
         {isSelected && <View style={styles.imageHover} />}
       </TouchableOpacity>
     );
@@ -110,6 +110,36 @@ class CreatePhotoScreen extends PureComponent {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  imageWrapper: {
+    width: (width - PADDING * 2 - MARGIN * 2) / 3,
+    height: (width - PADDING * 2 - MARGIN * 2) / 3,
+    borderRadius: 3,
+    marginVertical: "2.5%",
+    marginHorizontal: MARGIN
+  },
+  _image: {
+    flex: 1,
+    borderRadius: 3
+  },
+  loadingWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  imageHover: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderRadius: 3,
+    backgroundColor: "rgba(0, 0, 0, 0.5)"
+  }
+});
+
+export default CreatePhotoScreen;
 
 // class CreatePhotoScreen extends PureComponent {
 //   state = {
@@ -197,33 +227,3 @@ class CreatePhotoScreen extends PureComponent {
 //     );
 //   }
 // }
-
-const styles = StyleSheet.create({
-  imageWrapper: {
-    width: (width - PADDING * 2 - MARGIN) / 3,
-    height: (width - PADDING * 2 - MARGIN) / 3,
-    borderRadius: 3,
-    marginVertical: "2.5%",
-    marginHorizontal: MARGIN
-  },
-  _image: {
-    flex: 1,
-    borderRadius: 3
-  },
-  loadingWrapper: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  imageHover: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    borderRadius: 3,
-    borderColor: "rgba( 0, 0, 0, 0.5 )"
-  }
-});
-
-export default CreatePhotoScreen;
