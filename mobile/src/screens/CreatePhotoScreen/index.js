@@ -22,18 +22,36 @@ const MARGIN = 10;
 const { width } = Dimensions.get("window");
 
 class CreatePhotoScreen extends PureComponent {
-  state = {
-    images: [],
-    loading: false,
-    selected: null,
-    hasNextPage: false,
-    endCursor: "",
-    firstQuery: true
-  };
+  constructor(props) {
+    super(props);
+
+    state = {
+      images: [],
+      loading: false,
+      selected: null,
+      hasNextPage: false,
+      endCursor: "",
+      firstQuery: true
+    };
+  }
 
   componentDidMount() {
     this._getPhotos();
   }
+
+  _onNavigatorEvent = e => {
+    if (e.type === "NavBarButtonPress") {
+      if (e.id === "goToCaption") {
+        this.props.navigator.push({
+          screen: "mobile.CaptionScreen",
+          title: "New Post",
+          passProps: {
+            image: this.state.selected
+          }
+        });
+      }
+    }
+  };
 
   _getPhotos = async after => {
     if (this.state.firstQuery) {
