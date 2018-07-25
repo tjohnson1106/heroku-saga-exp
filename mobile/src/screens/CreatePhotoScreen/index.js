@@ -25,7 +25,7 @@ class CreatePhotoScreen extends PureComponent {
   constructor(props) {
     super(props);
 
-    state = {
+    this.state = {
       images: [],
       loading: false,
       selected: null,
@@ -33,6 +33,7 @@ class CreatePhotoScreen extends PureComponent {
       endCursor: "",
       firstQuery: true
     };
+    props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
 
   componentDidMount() {
@@ -41,9 +42,9 @@ class CreatePhotoScreen extends PureComponent {
 
   _onNavigatorEvent = e => {
     if (e.type === "NavBarButtonPress") {
-      if (e.id === "goToCaption") {
+      if (e.id === "goToOnboardPhoto") {
         this.props.navigator.push({
-          screen: "mobile.CaptionScreen",
+          screen: "mobile.OnboardPhotoScreen",
           title: "New Post",
           passProps: {
             image: this.state.selected
@@ -98,7 +99,7 @@ class CreatePhotoScreen extends PureComponent {
     this.props.navigator.setButtons({
       rightButtons: [
         {
-          id: "goToCaption",
+          id: "goToOnboardPhoto",
           title: "Next"
         }
       ],
