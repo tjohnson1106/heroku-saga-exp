@@ -10,7 +10,13 @@ class OnboardPhotoScreen extends PureComponent {
           <View style={styles.imageWrapper}>
             <Image style={styles.img} source={{ uri: this.props.image.node.image.uri }} />
           </View>
-          <View style={styles.onboardWrapper}>{}</View>
+          <View style={styles.onboardWrapper}>
+            <TextInput
+              placeholder="Say something here..."
+              style={styles.onboardInput}
+              multiline
+            />
+          </View>
         </View>
       </View>
     );
@@ -37,8 +43,13 @@ const styles = StyleSheet.create({
   onboardWrapper: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "red"
+    alignItems: "center"
+  },
+  onboardInput: {
+    width: "100%",
+    paddingVertical: 10,
+    paddingRight: 10,
+    height: 100
   }
 });
 
