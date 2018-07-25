@@ -45,7 +45,7 @@ class CreatePhotoScreen extends PureComponent {
       if (e.id === "goToOnboardPhoto") {
         this.props.navigator.push({
           screen: "mobile.OnboardPhotoScreen",
-          title: "New Post",
+          title: "Share your story",
           passProps: {
             image: this.state.selected
           }
