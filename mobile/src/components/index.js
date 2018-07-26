@@ -1,3 +1,3 @@
-import StoryCard from "./StoryCard";
+export { default as StoryCard } from "./StoryCard";
 
-export { StoryCard }
+export { default as Divider } from "./Divider";

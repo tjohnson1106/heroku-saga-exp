@@ -1,5 +1,18 @@
 import React, { PureComponent } from "react";
-import { View, ImageBackground, StyleSheet, TextInput } from "react-native";
+import {
+  View,
+  ImageBackground,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Keyboard,
+  TouchableWithoutFeedback
+} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { Divider } from "../../components";
+import { colors } from "../../utils/themes";
 
 class OnboardPhotoScreen extends PureComponent {
   constructor(props) {
@@ -16,7 +29,7 @@ class OnboardPhotoScreen extends PureComponent {
 
   render() {
     return (
-      <View style={styles.root}>
+      <TouchableOpacity style={styles.root} onPress={Keyboard.dismiss}>
         <View style={styles.header}>
           <View style={styles.imageWrapper}>
             <ImageBackground
@@ -31,13 +44,21 @@ class OnboardPhotoScreen extends PureComponent {
                   value={this.state.caption}
                   onChangeText={this._onCaptionChange}
                   //remember for android
-                  underlineColorAndroid="rgba( 0. 0. 0. 0.3 )"
+                  underlineColorAndroid="rgba( 0. 0. 0. 0 )"
                 />
               </View>
             </ImageBackground>
           </View>
         </View>
-      </View>
+        <Divider />
+        <TouchableOpacity style={styles.listItem}>
+          <View>
+            <Text>Tags</Text>
+
+            <Ionicons name="ios-arrow-forward" size={20} color={colors.lightGray} />
+          </View>
+        </TouchableOpacity>
+      </TouchableOpacity>
     );
   }
 }
@@ -81,6 +102,15 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     height: 100,
     color: "black"
+  },
+  listItem: {
+    height: 40,
+    width: "100%",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.lightGray,
+    paddingHorizontal: 16,
+    justifyContent: "space-between",
+    flexDirection: "row"
   }
 });
 
