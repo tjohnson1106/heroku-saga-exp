@@ -15,6 +15,7 @@ import { withApollo } from "react-apollo";
 
 import { Divider } from "../../components";
 import { colors } from "../../utils/themes";
+import { uploadImageToS3 } from "../../utils/uploadImage";
 
 const signS3Query = gql`
   query {
