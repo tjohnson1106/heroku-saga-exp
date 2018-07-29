@@ -3,7 +3,7 @@ import Integer, only: [is_odd: 1]
 alias Server.{Posts, Repo, Accounts}
 
 mock_photos = 9
-mock_users = 5
+mock_users = 9
 
 photos_list = [
   "https://res.cloudinary.com/bracket-factory/image/upload/v1532452457/wide.jpg",
