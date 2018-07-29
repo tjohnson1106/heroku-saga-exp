@@ -10,9 +10,20 @@ import {
   TouchableWithoutFeedback
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import gql from "graphql-tag";
+import { withApollo } from "react-apollo";
 
 import { Divider } from "../../components";
 import { colors } from "../../utils/themes";
+
+const signS3Query = gql`
+  query {
+    presignUrl {
+      url
+      uploadUrl
+    }
+  }
+`;
 
 class OnboardPhotoScreen extends PureComponent {
   constructor(props) {
@@ -37,7 +48,7 @@ class OnboardPhotoScreen extends PureComponent {
     });
   }
 
-  _onNavigatorEvent = () => {
+  _onNavigatorEvent = e => {
     if (e.type === "NavBarButtonPress") {
       if (e.id === "sharePost") {
         this._onSharePostPress();
@@ -45,13 +56,21 @@ class OnboardPhotoScreen extends PureComponent {
     }
   };
 
-  _onSharePostPress = () => {};
+  _onSharePostPress = async () => {
+    const res = await this.props.client.query({ query: signS3Query });
+    console.log("================");
+    console.log("onSharePostPress", res);
+    console.log("================");
+  };
 
   _onCaptionChange = caption => {
     this.setState({ caption });
   };
 
   render() {
+    console.log("====================");
+    console.log("my props", this.props);
+    console.log("====================");
     return (
       <TouchableOpacity style={styles.root} onPress={Keyboard.dismiss}>
         <View style={styles.header}>
@@ -138,4 +157,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default OnboardPhotoScreen;
+export default withApollo(OnboardPhotoScreen);
