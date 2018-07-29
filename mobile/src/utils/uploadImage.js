@@ -1,5 +1,3 @@
-import { defaultFieldResolver } from "../../node_modules/@types/graphql";
-
 // start with async function
 
 const uploadImage = async (method, url, file) => {
@@ -7,6 +5,16 @@ const uploadImage = async (method, url, file) => {
     const xhr = new XMLHttpRequest();
     xhr.open(method, url);
     xhr.setRequestHeader("Content-Type", file.type);
+    xhr.onload = () => {
+      if (xhr.status !== 200) {
+        reject(
+          new Error(`Request failed. Status: ${xhr.status}. Content: ${xhr.responseText}`)
+        );
+      }
+
+      resolve(xhr.responseText);
+    };
+    xhr.send(file);
   });
 };
 
