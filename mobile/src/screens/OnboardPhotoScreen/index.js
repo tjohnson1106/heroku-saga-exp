@@ -21,7 +21,31 @@ class OnboardPhotoScreen extends PureComponent {
     this.state = {
       caption: ""
     };
+
+    props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
   }
+
+  componentDidMount() {
+    this.props.navigator.setButtons({
+      rightButtons: [
+        {
+          id: "sharePost",
+          title: "share"
+        }
+      ],
+      animated: true
+    });
+  }
+
+  _onNavigatorEvent = () => {
+    if (e.type === "NavBarButtonPress") {
+      if (e.id === "sharePost") {
+        this._onSharePostPress();
+      }
+    }
+  };
+
+  _onSharePostPress = () => {};
 
   _onCaptionChange = caption => {
     this.setState({ caption });
