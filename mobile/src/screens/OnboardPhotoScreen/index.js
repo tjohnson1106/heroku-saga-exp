@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Text,
   Keyboard,
-  TouchableWithoutFeedback
+  ActivityIndicator
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import gql from "graphql-tag";
@@ -33,7 +33,8 @@ class OnboardPhotoScreen extends PureComponent {
     super(props);
 
     this.state = {
-      caption: ""
+      caption: "",
+      loading: false
     };
 
     props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
@@ -60,6 +61,7 @@ class OnboardPhotoScreen extends PureComponent {
   };
 
   _onSharePostPress = async () => {
+    this.setState({ loading: true });
     const res = await this.props.client.query({ query: signS3Query });
     const resultFromS3 = await uploadImageToS3(
       this.props.image.node.image.uri,
@@ -69,6 +71,11 @@ class OnboardPhotoScreen extends PureComponent {
     await this.props.onCreatePhoto({
       imageUrl: resultFromS3.remoteUrl,
       caption: this.state.caption
+    });
+
+    this.setState({ loading: false });
+    this.props.navigator.dismissModal({
+      animationType: "slide-down"
     });
 
     console.log("============================");
@@ -81,9 +88,14 @@ class OnboardPhotoScreen extends PureComponent {
   };
 
   render() {
-    console.log("====================");
-    console.log("my props", this.props);
-    console.log("====================");
+    if (this.state.loading) {
+      return (
+        <View style={styles.loadingWrapper}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
     return (
       <TouchableOpacity style={styles.root} onPress={Keyboard.dismiss}>
         <View style={styles.header}>
@@ -148,6 +160,11 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   onboardWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  loadingWrapper: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
