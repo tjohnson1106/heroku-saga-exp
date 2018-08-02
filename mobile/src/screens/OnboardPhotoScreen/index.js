@@ -59,9 +59,13 @@ class OnboardPhotoScreen extends PureComponent {
 
   _onSharePostPress = async () => {
     const res = await this.props.client.query({ query: signS3Query });
-    console.log("================");
-    console.log("onSharePostPress", res);
-    console.log("================");
+    const resultFromS3 = await uploadImageToS3(
+      this.props.image.node.image.uri,
+      res.data.presignUrl
+    );
+    console.log("============================");
+    console.log("resultFromS3", resultFromS3);
+    console.log("============================");
   };
 
   _onCaptionChange = caption => {
