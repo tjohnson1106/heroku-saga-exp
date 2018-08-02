@@ -11,11 +11,13 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import gql from "graphql-tag";
-import { withApollo } from "react-apollo";
+import { withApollo, graphql } from "react-apollo";
 
 import { Divider } from "../../components";
 import { colors } from "../../utils/themes";
 import { uploadImageToS3 } from "../../utils/uploadImage";
+import { createPhotoMutation } from "../../graphql/mutations";
+import { FeedsPhotoFragment } from "../FeedsScreen/fragments";
 
 const signS3Query = gql`
   query {
@@ -63,6 +65,12 @@ class OnboardPhotoScreen extends PureComponent {
       this.props.image.node.image.uri,
       res.data.presignUrl
     );
+
+    await this.props.onCreatePhoto({
+      imageUrl: resultFromS3.remoteUrl,
+      caption: this.state.caption
+    });
+
     console.log("============================");
     console.log("resultFromS3", resultFromS3);
     console.log("============================");
@@ -162,4 +170,32 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withApollo(OnboardPhotoScreen);
+const getPhotos = gql`
+  query {
+    photos {
+      ...feedsPhoto
+    }
+  }
+  ${FeedsPhotoFragment}
+`;
+
+export default graphql(createPhotoMutation, {
+  props: ({ mutate }) => ({
+    onCreatePhoto: variables =>
+      mutate({
+        variables,
+        update: (store, { data: { createPhoto } }) => {
+          const query = store.readQuery({
+            query: getPhotos
+          });
+
+          store.writeData({
+            query: getPhotos,
+            data: {
+              photos: [createPhoto, ...query.photos]
+            }
+          });
+        }
+      })
+  })
+})(withApollo(OnboardPhotoScreen));
