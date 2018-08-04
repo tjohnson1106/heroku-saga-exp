@@ -7,15 +7,17 @@ import {
   TouchableOpacity,
   Text,
   Keyboard,
-  TouchableWithoutFeedback
+  ActivityIndicator
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import gql from "graphql-tag";
-import { withApollo } from "react-apollo";
+import { withApollo, graphql } from "react-apollo";
 
 import { Divider } from "../../components";
 import { colors } from "../../utils/themes";
 import { uploadImageToS3 } from "../../utils/uploadImage";
+import { createPhotoMutation } from "../../graphql/mutations";
+import { FeedsPhotoFragment } from "../FeedsScreen/fragments";
 
 const signS3Query = gql`
   query {
@@ -31,7 +33,8 @@ class OnboardPhotoScreen extends PureComponent {
     super(props);
 
     this.state = {
-      caption: ""
+      caption: "",
+      loading: false
     };
 
     props.navigator.setOnNavigatorEvent(this._onNavigatorEvent.bind(this));
@@ -58,11 +61,23 @@ class OnboardPhotoScreen extends PureComponent {
   };
 
   _onSharePostPress = async () => {
+    this.setState({ loading: true });
     const res = await this.props.client.query({ query: signS3Query });
     const resultFromS3 = await uploadImageToS3(
       this.props.image.node.image.uri,
       res.data.presignUrl
     );
+
+    await this.props.onCreatePhoto({
+      imageUrl: resultFromS3.remoteUrl,
+      caption: this.state.caption
+    });
+
+    this.setState({ loading: false });
+    this.props.navigator.dismissModal({
+      animationType: "slide-down"
+    });
+
     console.log("============================");
     console.log("resultFromS3", resultFromS3);
     console.log("============================");
@@ -73,9 +88,14 @@ class OnboardPhotoScreen extends PureComponent {
   };
 
   render() {
-    console.log("====================");
-    console.log("my props", this.props);
-    console.log("====================");
+    if (this.state.loading) {
+      return (
+        <View style={styles.loadingWrapper}>
+          <ActivityIndicator size="large" />
+        </View>
+      );
+    }
+
     return (
       <TouchableOpacity style={styles.root} onPress={Keyboard.dismiss}>
         <View style={styles.header}>
@@ -144,6 +164,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+  loadingWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   onboardInput: {
     width: "100%",
     paddingVertical: 10,
@@ -162,4 +187,32 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withApollo(OnboardPhotoScreen);
+const getPhotos = gql`
+  query {
+    photos {
+      ...feedsPhoto
+    }
+  }
+  ${FeedsPhotoFragment}
+`;
+
+export default graphql(createPhotoMutation, {
+  props: ({ mutate }) => ({
+    onCreatePhoto: variables =>
+      mutate({
+        variables,
+        update: (store, { data: { createPhoto } }) => {
+          const query = store.readQuery({
+            query: getPhotos
+          });
+
+          store.writeData({
+            query: getPhotos,
+            data: {
+              photos: [createPhoto, ...query.photos]
+            }
+          });
+        }
+      })
+  })
+})(withApollo(OnboardPhotoScreen));
