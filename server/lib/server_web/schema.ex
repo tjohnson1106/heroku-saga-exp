@@ -50,4 +50,11 @@ defmodule ServerWeb.Schema do
       resolve(&Resolvers.Reactions.like_photo/3)
     end
   end
+
+  @desc "Create a comment for photo"
+  field :create_comment, :comment do
+    arg(:photo_id, non_null(:id))
+    arg(:text, non_null("string"))
+    middleware(Middleware.Authorize)
+  end
 end

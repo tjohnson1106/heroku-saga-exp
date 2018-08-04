@@ -20,4 +20,12 @@ defmodule ServerWeb.Resolvers.Posts do
       {:ok, photo}
     end
   end
+
+  def create_comment(_, args, %{context: %{current_user: current_user}}) do
+    attrs = Map.merge(args, %{user_id: current_user.id})
+
+    with {:ok, comment} <- Posts.create_comment(attrs) do
+      {:ok, comment}
+    end
+  end
 end
