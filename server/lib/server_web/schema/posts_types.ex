@@ -1,5 +1,8 @@
 defmodule ServerWeb.Schema.PostsTypes do
   use Absinthe.Schema.Notation
+  use Absinthe.Ecto, repo: Server.Repo
+
+  import Ecto.Query
 
   alias ServerWeb.Resolvers
 
@@ -19,5 +22,11 @@ defmodule ServerWeb.Schema.PostsTypes do
   object :presign_url do
     field(:url, non_null(:string))
     field(:upload_url, non_null(:string))
+  end
+
+  object :comment do
+    field(:id, non_null(:id))
+    field(:text, non_null(:string))
+    field(:user, non_null(:user))
   end
 end
