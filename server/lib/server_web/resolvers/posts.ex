@@ -28,4 +28,8 @@ defmodule ServerWeb.Resolvers.Posts do
       {:ok, comment}
     end
   end
+
+  def get_comments(_, %{photo_id: photo_id}) do
+    {:ok, Post.get_comments_for_photo(photo_id)}
+  end
 end

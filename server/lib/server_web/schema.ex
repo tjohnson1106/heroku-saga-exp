@@ -25,6 +25,13 @@ defmodule ServerWeb.Schema do
       middleware.Middleware.Authorize
       resolve(&Resolvers.Posts.presign_url/3)
     end
+
+    @desc "Get all comments for a photo"
+    field :comments, non_null(list_of(:comments)) do
+      arg(:photo_id, non_null(:id))
+      middleware.Middleware.Authorize
+      resolve(&Resolvers.Posts.get_comments/3)
+    end
   end
 
   mutation do
@@ -49,12 +56,13 @@ defmodule ServerWeb.Schema do
       middleware(Middleware.Authorize)
       resolve(&Resolvers.Reactions.like_photo/3)
     end
-  end
 
-  @desc "Create a comment for photo"
-  field :create_comment, :comment do
-    arg(:photo_id, non_null(:id))
-    arg(:text, non_null("string"))
-    middleware(Middleware.Authorize)
+    @desc "Create a comment for photo"
+    field :create_comment, :comment do
+      arg(:photo_id, non_null(:id))
+      arg(:text, non_null(:string))
+      middleware(Middleware.Authorize)
+      resolve(&Resolvers.Posts.create_comment/3)
+    end
   end
 end
