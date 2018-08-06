@@ -9,13 +9,28 @@ import { makeHitSlop, makeCircle } from "../utils/themes";
 
 class CommentInput extends Component {
   state = {};
+
+  _goToComments = () => {
+    this.props.navigator.push({
+      screen: "mobile.CommentsScreen",
+      title: "Comments",
+      passProps: {
+        photoId: this.props.photoId
+      }
+    });
+  };
+
   render() {
     return (
       <View style={styles.root}>
         <View style={styles.avatarWrapper}>
           {/* <Image source={{ uri: fakeAvatar }} style={styles.avatar} /> */}
         </View>
-        <TouchableOpacity hitSlop={makeHitSlop(20)} style={styles.inputWrapper}>
+        <TouchableOpacity
+          hitSlop={makeHitSlop(20)}
+          style={styles.inputWrapper}
+          onPress={this._goToComments}
+        >
           <View style={styles.input}>
             <Text style={styles.inputText}>Comment...</Text>
           </View>
