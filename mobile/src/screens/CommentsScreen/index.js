@@ -1,20 +1,60 @@
 import React, { PureComponent } from "react";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { Query } from "react-apollo";
+import graphql from "graphql-tag";
+import gql from "graphql-tag";
+
+const GET_COMMENTS = gql`
+  query Comments($photoId: ID!) {
+    comments(photoId: $photoId) {
+      id
+      text
+      user {
+        avatar
+        id
+        username
+      }
+    }
+  }
+`;
 
 class CommentsScreen extends PureComponent {
   state = {};
   render() {
     return (
-      <View style={styles.root}>
-        <Text>Comments Screen Id: {this.props.photoId}</Text>
-      </View>
+      <Query query={GET_COMMENTS} variables={{ photoId: this.props.photoId }}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return (
+              <View style={styles.root}>
+                <ActivityIndicator size="large" />
+              </View>
+            );
+          }
+          if (error) {
+            return (
+              <View>
+                <Text>{JSON.stringify(error)}</Text>
+              </View>
+            );
+          }
+
+          return (
+            <ScrollView>
+              <Text> {JSON.stringify(data)} </Text>
+            </ScrollView>
+          );
+        }}
+      </Query>
     );
   }
 }
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
   }
 });
 
