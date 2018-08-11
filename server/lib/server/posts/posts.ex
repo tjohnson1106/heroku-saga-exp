@@ -80,7 +80,7 @@ defmodule Server.Posts do
     Comment.changeset(comment, %{})
   end
 
-  def get_comments_for_photos(photo_id) do
+  def get_comments_for_photo(photo_id) do
     query = from(c in Comment, where: c.photo_id == ^photo_id, order_by: [desc: :inserted_at])
     Repo.all(query)
   end

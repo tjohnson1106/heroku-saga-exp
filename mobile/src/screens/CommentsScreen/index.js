@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
 import { Query } from "react-apollo";
-import graphql from "graphql-tag";
+// import graphql from "graphql-tag";
 import gql from "graphql-tag";
 
 const GET_COMMENTS = gql`
@@ -41,7 +41,7 @@ class CommentsScreen extends PureComponent {
 
           return (
             <ScrollView>
-              <Text> {JSON.stringify(data)} </Text>
+              <Text> {JSON.stringify(data, null, 2)} </Text>
             </ScrollView>
           );
         }}
