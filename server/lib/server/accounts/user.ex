@@ -13,6 +13,7 @@ defmodule Server.Accounts.User do
 
     has_many(:photos, Server.Posts.Photo)
     has_many(:like_photos, Server.Reactions.LikePhoto)
+    has_many(:comments, Server.Posts.Comment)
 
     timestamps()
   end

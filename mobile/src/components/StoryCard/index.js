@@ -37,7 +37,7 @@ class StoryCard extends Component {
           <TouchableOpacity>
             <Text style={styles.commentViewAll}>View all 14 comments</Text>
           </TouchableOpacity>
-          <CommentInput />
+          <CommentInput photoId={this.props.data.id} navigator={this.props.navigator} />
         </View>
       </View>
     );

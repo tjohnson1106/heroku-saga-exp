@@ -6,7 +6,7 @@ defmodule Server.Posts do
   import Ecto.Query, warn: false
   alias Server.Repo
 
-  alias Server.Posts.Photo
+  alias Server.Posts.{Photo, Comment}
 
   def list_photos do
     query = from(p in Photo, order_by: [desc: :inserted_at])
@@ -52,5 +52,36 @@ defmodule Server.Posts do
 
   defp get_image_url(bucket, uuid) do
     "http://s3.amazonaws.com/saga-beta/#{bucket}/#{uuid}.jpg"
+  end
+
+  def list_photo_comments do
+    Repo.all(Comment)
+  end
+
+  def get_comment!(id), do: Repo.get!(Comment, id)
+
+  def create_comment(attrs \\ %{}) do
+    %Comment{}
+    |> Comment.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_comment(%Comment{} = comment, attrs) do
+    comment
+    |> Comment.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_comment(%Comment{} = comment) do
+    Repo.delete(comment)
+  end
+
+  def change_comment(%Comment{} = comment) do
+    Comment.changeset(comment, %{})
+  end
+
+  def get_comments_for_photo(photo_id) do
+    query = from(c in Comment, where: c.photo_id == ^photo_id, order_by: [desc: :inserted_at])
+    Repo.all(query)
   end
 end

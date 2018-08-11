@@ -10,6 +10,7 @@ defmodule Server.Posts.Photo do
     belongs_to(:user, Server.Accounts.User)
 
     has_many(:likes, Server.Reactions.LikePhoto)
+    has_many(:comments, Server.Posts.Comment)
 
     timestamps()
   end
