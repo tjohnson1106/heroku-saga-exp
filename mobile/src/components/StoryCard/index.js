@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
+import { View, StyleSheet, Image, TouchableOpacity, Text, FlatList } from "react-native";
 import { human, iOSColors } from "react-native-typography";
 import { graphql } from "react-apollo";
 import { defaultDataIdFromObject } from "apollo-cache-inmemory";
@@ -12,8 +12,6 @@ import { likePhotoMutation } from "../../graphql/mutations";
 import { FeedsPhotoFragment } from "../../screens/FeedsScreen/fragments";
 
 class StoryCard extends Component {
-  state = {};
-
   _onLikedPress = () => {
     this.props.onLikePhotoMutation();
   };
@@ -28,6 +26,7 @@ class StoryCard extends Component {
             uri: this.props.data.imageUrl
           }}
         />
+
         <ActionButtons
           viewerLike={this.props.data.viewerLike}
           onLikedPress={this._onLikedPress}
