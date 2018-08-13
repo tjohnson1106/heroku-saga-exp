@@ -1,12 +1,13 @@
 import React, { PureComponent } from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 
-class Comments extends PureComponent {
-  state = {};
+class Comment extends PureComponent {
   render() {
     return (
-      <View>
-        <Text>Comment</Text>
+      <View style={styles.root}>
+        <View>{}</View>
+        <View>{}</View>
+        <View>{}</View>
       </View>
     );
   }
@@ -15,7 +16,10 @@ class Comments extends PureComponent {
 const styles = StyleSheet.create({
   root: {
     height: 50
-  }
+  },
+  avatarWrapper: {},
+  contentWrapper: {},
+  buttonWrapper: {}
 });
 
 export default Comment;

@@ -1,8 +1,9 @@
 import React, { PureComponent } from "react";
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, FlatList } from "react-native";
 import { Query } from "react-apollo";
-// import graphql from "graphql-tag";
 import gql from "graphql-tag";
+
+import { Comment } from "../../components";
 
 const GET_COMMENTS = gql`
   query Comments($photoId: ID!) {
@@ -21,6 +22,10 @@ const GET_COMMENTS = gql`
 
 class CommentsScreen extends PureComponent {
   state = {};
+
+  _keyExtractor = item => item.id;
+
+  _renderItem = ({ item }) => <Comment {...item} />;
   render() {
     return (
       <Query query={GET_COMMENTS} variables={{ photoId: this.props.photoId }}>
@@ -41,9 +46,11 @@ class CommentsScreen extends PureComponent {
           }
 
           return (
-            <ScrollView>
-              <Text> {JSON.stringify(data, null, 2)} </Text>
-            </ScrollView>
+            <FlatList
+              data={data.comments}
+              keyExtractor={this._keyExtractor}
+              renderItem={this._renderItem}
+            />
           );
         }}
       </Query>
