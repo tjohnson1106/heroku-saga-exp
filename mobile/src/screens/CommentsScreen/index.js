@@ -9,6 +9,7 @@ const GET_COMMENTS = gql`
     comments(photoId: $photoId) {
       id
       text
+      insertedAt
       user {
         avatar
         id
